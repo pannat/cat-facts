@@ -1,0 +1,38 @@
+<div class="board">
+  <nz-page-header class="board__title" nzTitle="Facts of Cats" nzSubtitle="just for fun">
+  </nz-page-header>
+  <nz-spin nzTip="Loading..." [nzSize]="'large'" [nzSpinning]="isLoading">
+    <div class="board__cards">
+      <nz-card
+        class="board__card"
+        *ngFor="let fact of factsForCurrentPage"
+        nzHoverable
+        [nzCover]="coverTemplate"
+      >
+        <nz-card-meta [nzDescription]="fact.createdAt | date: format"></nz-card-meta>
+        <p>{{fact.text}}</p>
+        <button nz-button nzType="primary" (click)="onFactClick(fact)">
+          Detail
+        </button>
+
+        <ng-template #coverTemplate>
+          <img alt="Kitten" src="/assets/img/kitten.png" />
+        </ng-template>
+      </nz-card>
+    </div>
+    <nz-pagination
+      *ngIf="!isLoading"
+      class="board__pagination"
+      [nzHideOnSinglePage]="true"
+      [nzShowSizeChanger]="true"
+      [nzPageSizeOptions]="pagination.pageSizeOptions"
+      [nzPageIndex]="pagination.currentPage"
+      [nzPageSize]="pagination.pageSize"
+      [nzTotal]="pagination.max"
+      (nzPageIndexChange)="onPageIndexChange($event)"
+      (nzPageSizeChange)="onPageSizeChange($event)"
+    ></nz-pagination>
+  </nz-spin>
+</div>
+
+

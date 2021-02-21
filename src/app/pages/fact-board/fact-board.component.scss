@@ -1,0 +1,28 @@
+.board {
+  padding: 48px 24px;
+  min-height: calc(100vh - 64px);
+}
+
+.board__cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 300px);
+  grid-column-gap: 48px;
+  grid-row-gap: 48px;
+  justify-content: space-between;
+  flex-grow: 1;
+  width: 100%;
+  margin: 0 auto;
+  padding-bottom: 48px;
+}
+
+.board__card {
+  height: 400px;
+  cursor: default;
+
+  p {
+    padding: 16px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}

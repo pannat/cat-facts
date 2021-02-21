@@ -1,0 +1,18 @@
+<section class="fact-detail">
+  <nz-spin nzTip="Loading..." [nzSize]="'large'" [nzSpinning]="isLoading">
+    <nz-card *ngIf="!isLoading && false" class="fact-detail__card">
+      <div nz-row>
+        <div nz-col>Created at </div>
+        <div nz-col>{{fact?.createdAt}}</div>
+      </div>
+      <div nz-row>
+        <div nz-col>Updated at</div>
+        <div nz-col> {{fact?.createdAt}}</div>
+      </div>
+      <p class="fact-detail__message">{{fact?.text}}</p>
+    </nz-card>
+
+    <h2 nz-typography>Coming soon...</h2>
+  </nz-spin>
+</section>
+
