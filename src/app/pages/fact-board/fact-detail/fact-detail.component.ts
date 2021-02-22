@@ -29,7 +29,6 @@ export class FactDetailComponent implements OnInit {
         .subscribe((result: Fact<User>) => {
           this.fact = result;
           this.isLoading = false;
-          console.log(result);
         });
     } else {
       throw Error('Parameter Id is undefined');
