@@ -1,8 +1,7 @@
 import {NgModule} from '@angular/core';
-import { FactBoardComponent } from './fact-board/fact-board.component';
-import { FactDetailComponent } from './fact-board/fact-detail/fact-detail.component';
 import { PagesComponent } from './pages.component';
 import { PagesRoutingModule } from './pages-routing.module';
+import { FactBoardModule } from './fact-board/fact-board.module';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
@@ -18,6 +17,8 @@ import { CommonModule } from '@angular/common';
 @NgModule({
   imports: [
     PagesRoutingModule,
+    FactBoardModule,
+    CommonModule,
     NzLayoutModule,
     NzTypographyModule,
     NzPageHeaderModule,
@@ -27,13 +28,12 @@ import { CommonModule } from '@angular/common';
     NzDividerModule,
     NzPaginationModule,
     NzSpinModule,
-    NzButtonModule,
-    CommonModule
+    NzButtonModule
+  ],
+  exports: [
   ],
   declarations: [
-    PagesComponent,
-    FactBoardComponent,
-    FactDetailComponent
+    PagesComponent
   ]
 })
 

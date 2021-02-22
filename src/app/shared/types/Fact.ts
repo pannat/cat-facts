@@ -1,4 +1,4 @@
-export type Fact = {
+export type Fact<T> = {
   createdAt: string,
   updatedAt: string,
   deleted: boolean,
@@ -10,5 +10,5 @@ export type Fact = {
   _id: string,
   text: string,
   used: false,
-  user: string
+  user: T
 };

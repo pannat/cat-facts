@@ -13,8 +13,8 @@ const TYPE = 'cat';
 })
 export class FactBoardComponent implements OnInit {
   public isLoading = false;
-  public facts: Array<Fact> = [];
-  public factsForCurrentPage: Array<Fact> = [];
+  public facts: Array<Fact<string>> = [];
+  public factsForCurrentPage: Array<Fact<string>> = [];
   public format = 'dd/MM/yyyy hh:mm';
   public pagination = {
     currentPage: 1,
@@ -28,7 +28,7 @@ export class FactBoardComponent implements OnInit {
     this.isLoading = true;
     this.catFactsService
       .getFacts({animal_type: TYPE, amount: AMOUNT})
-      .subscribe((result: Array<Fact>) => {
+      .subscribe((result: Array<Fact<string>>) => {
         this.facts = result.sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
         this.factsForCurrentPage = this.getFactsForCurrentPage();
         this.isLoading = false;
@@ -37,8 +37,8 @@ export class FactBoardComponent implements OnInit {
       });
   }
 
-  public onFactClick(fact: Fact): void {
-    this.router.navigate([`/pages/board/${fact._id}`]);
+  public onFactClick(fact: Fact<string>): void {
+    this.router.navigate([`/pages/board/item/${fact._id}`]);
   }
 
   public onPageIndexChange(index: number): void {
@@ -52,7 +52,7 @@ export class FactBoardComponent implements OnInit {
     this.factsForCurrentPage = this.getFactsForCurrentPage();
   }
 
-  private getFactsForCurrentPage(): Array<Fact> {
+  private getFactsForCurrentPage(): Array<Fact<string>> {
     const startPosition = (this.pagination.currentPage - 1) * this.pagination.pageSize;
     const endPosition = this.pagination.currentPage * this.pagination.pageSize;
     return this.facts.slice(startPosition, endPosition);

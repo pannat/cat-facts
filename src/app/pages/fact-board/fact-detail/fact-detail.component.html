@@ -1,18 +1,34 @@
 <section class="fact-detail">
-  <nz-spin nzTip="Loading..." [nzSize]="'large'" [nzSpinning]="isLoading">
-    <nz-card *ngIf="!isLoading && false" class="fact-detail__card">
-      <div nz-row>
-        <div nz-col>Created at </div>
-        <div nz-col>{{fact?.createdAt}}</div>
-      </div>
-      <div nz-row>
-        <div nz-col>Updated at</div>
-        <div nz-col> {{fact?.createdAt}}</div>
-      </div>
-      <p class="fact-detail__message">{{fact?.text}}</p>
-    </nz-card>
+  <nz-page-header class="fact-detail__header" nzBackIcon (nzBack)="onBack()">
+    <nz-page-header-title>Fact detail</nz-page-header-title>
+    <nz-page-header-subtitle>more info</nz-page-header-subtitle>
+  </nz-page-header>
 
-    <h2 nz-typography>Coming soon...</h2>
+  <nz-spin nzTip="Loading..." [nzSize]="'large'" [nzSpinning]="isLoading">
+    <nz-card *ngIf="!isLoading && fact" class="fact-detail__card">
+      <nz-card-meta
+        nzTitle="{{fact?.user?.name?.first}} {{fact?.user?.name?.last}}"
+        nzDescription="T{{fact?.user?._id}}"
+        [nzAvatar]="avatarTemplate"
+      ></nz-card-meta>
+      <ng-template #avatarTemplate>
+        <nz-avatar [nzSize]="54" [nzIcon]="'user'" [nzSrc]="fact?.user?.photo"></nz-avatar>
+      </ng-template>
+
+      <nz-divider></nz-divider>
+      <div nz-row>
+        <div nz-col nzSpan="3">Created at: </div>
+        <div nz-col nzSpan="21">{{fact?.createdAt | date: format}}</div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3">Updated at: </div>
+        <div nz-col nzSpan="21"> {{fact?.createdAt | date: format}}</div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3">Message: </div>
+        <div nz-col nzSpan="21">{{fact?.text}}</div>
+      </div>
+    </nz-card>
   </nz-spin>
 </section>
 

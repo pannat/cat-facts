@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CatFactsService } from '../../../shared/services/cat-facts.service';
-import { ActivatedRoute } from '@angular/router';
-import {Fact} from '../../../shared/types/Fact';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Fact } from '../../../shared/types/Fact';
+import { User } from '../../../shared/types/User';
 
 @Component({
   selector: 'app-fact-detail',
@@ -10,26 +11,32 @@ import {Fact} from '../../../shared/types/Fact';
 })
 export class FactDetailComponent implements OnInit {
   public isLoading = false;
-  public fact: Fact | undefined;
   private id: string | undefined;
+  public fact: Fact<User> | undefined;
+  public format = 'dd/MM/yyyy hh:mm';
 
-  constructor(private catFactsService: CatFactsService, private route: ActivatedRoute) {
-    this.ngOnInit();
+  constructor(private catFactsService: CatFactsService, private route: ActivatedRoute, private router: Router) {
+    this.route.params
+      .subscribe((result) => {
+        this.id = result.id;
+      });
   }
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.params.id;
-
     if (this.id) {
       this.isLoading = true;
       this.catFactsService.getFact(this.id)
-        .subscribe((result: Fact) => {
+        .subscribe((result: Fact<User>) => {
           this.fact = result;
           this.isLoading = false;
           console.log(result);
         });
     } else {
-      throw Error('Parameter ID is undefined');
+      throw Error('Parameter Id is undefined');
     }
+  }
+
+  public onBack(): void {
+    this.router.navigate(['/pages/board']);
   }
 }

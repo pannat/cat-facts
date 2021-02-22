@@ -2,7 +2,7 @@
   <nz-page-header class="board__title" nzTitle="Facts of Cats" nzSubtitle="just for fun">
   </nz-page-header>
   <nz-spin nzTip="Loading..." [nzSize]="'large'" [nzSpinning]="isLoading">
-    <div class="board__cards">
+    <div class="board__cards" *ngIf="!isLoading">
       <nz-card
         class="board__card"
         *ngFor="let fact of factsForCurrentPage"
