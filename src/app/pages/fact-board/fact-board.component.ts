@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import { CatFactsService } from '../../shared/services/cat-facts.service';
 import { Fact } from '../../shared/types/Fact';
 import { Router } from '@angular/router';
@@ -9,7 +9,8 @@ const TYPE = 'cat';
 @Component({
   selector: 'app-fact-board',
   templateUrl: './fact-board.component.html',
-  styleUrls: ['./fact-board.component.scss']
+  styleUrls: ['./fact-board.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FactBoardComponent implements OnInit {
   public isLoading = false;
