@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CatFactsService } from '../../shared/services/cat-facts.service';
 import { Fact } from '../../shared/types/Fact';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 const AMOUNT = '200';
 const TYPE = 'cat';
@@ -11,7 +12,7 @@ const TYPE = 'cat';
   templateUrl: './fact-board.component.html',
   styleUrls: ['./fact-board.component.scss']
 })
-export class FactBoardComponent implements OnInit {
+export class FactBoardComponent implements OnInit, OnDestroy {
   public isLoading = false;
   public facts: Array<Fact<string>> = [];
   public factsForCurrentPage: Array<Fact<string>> = [];
@@ -22,11 +23,14 @@ export class FactBoardComponent implements OnInit {
     pageSizeOptions: [10, 20, 40],
     max: AMOUNT
   };
+  private subscriptions: Subscription = new Subscription;
+
   constructor(private catFactsService: CatFactsService, private router: Router) { }
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.catFactsService
+
+    const catFactsSubscription = this.catFactsService
       .getFacts({animal_type: TYPE, amount: AMOUNT})
       .subscribe((result: Array<Fact<string>>) => {
         this.facts = result.sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
@@ -35,6 +39,12 @@ export class FactBoardComponent implements OnInit {
       }, error => {
         throw new Error(error.message);
       });
+
+    this.subscriptions.add(catFactsSubscription);
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
   public onFactClick(fact: Fact<string>): void {
